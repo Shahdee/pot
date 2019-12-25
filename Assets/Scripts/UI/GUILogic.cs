@@ -11,11 +11,11 @@ public class GUILogic : UIObject, IInitable, IUpdatable
     public CanvasScaler m_Scaler;
     public List<WinViewBase> m_Windows;
 
-    static float m_Scale;
+    // static float m_Scale;
 
-    public static float GetScale(){
-        return m_Scale;
-    }
+    // public static float GetScale(){
+    //     return m_Scale;
+    // }
 
     public void Init(){
 
@@ -46,7 +46,7 @@ public class GUILogic : UIObject, IInitable, IUpdatable
 
     void OpenWindow(WinViewBase.WinType wType){
 
-        // Debug.Log("OpenWindow " + wType);
+        Debug.Log("OpenWindow " + wType);
 
         for (int i=0; i<m_Windows.Count; i++){
             if (m_Windows[i].m_WindowType == wType)
@@ -61,8 +61,11 @@ public class GUILogic : UIObject, IInitable, IUpdatable
     }
 
     void GameStateChange(MainLogic.GameStates state){
-
         switch(state){
+            case MainLogic.GameStates.Menu:
+                OpenWindow(WinViewBase.WinType.Main);
+            break;
+
             case MainLogic.GameStates.Play:
                 OpenWindow(WinViewBase.WinType.Gameplay);
             break;

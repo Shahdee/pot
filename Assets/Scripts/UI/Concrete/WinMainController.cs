@@ -11,7 +11,7 @@ public class WinMainController : WinControllerBase
 
 
     public void SendStart(){
-        // MainLogic.GetMainLogic().Start
+        MainLogic.GetMainLogic().StartGame();
     }
    
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MoveEntity : MonoBehaviour
 {
@@ -8,13 +6,11 @@ public class MoveEntity : MonoBehaviour
     public Vector3 m_Velocity;
     Vector3 m_VcMove;
 
-    // Start is called before the first frame update
     void Start()
     {
         m_Transform = transform;
     }
 
-    // Update is called once per frame
     void Update()
     {
         m_VcMove = m_Transform.position;

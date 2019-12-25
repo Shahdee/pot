@@ -5,11 +5,13 @@ using UnityEngine.Events;
 public class MainLogic : MonoBehaviour
 {
     public GUILogic m_GUILogic;
+    public EntityManager m_EntityManager;
 
-    // public EntityManager m_EntityManager;
     // public InputManager m_InputManager;
-    // public Level m_Level;
-    // LevelLogic m_LevelLogic;
+
+    public Level m_Level;
+    LevelLogic m_LevelLogic;
+
     // PhysicsManager m_PhysManager;
 
     public enum GameStates{
@@ -43,21 +45,21 @@ public class MainLogic : MonoBehaviour
         }
     }
     
-    // public EntityManager GetEntityManager(){
-    //     return m_EntityManager;
-    // }
+    public EntityManager GetEntityManager(){
+        return m_EntityManager;
+    }
 
     // public InputManager GetInputManager(){
     //     return m_InputManager;
     // }
 
-    // public LevelLogic GetLevelLogic(){
-    //     return m_LevelLogic;
-    // }
+    public LevelLogic GetLevelLogic(){
+        return m_LevelLogic;
+    }
 
-    // public Level GetLevel(){
-    //     return m_Level;
-    // }
+    public Level GetLevel(){
+        return m_Level;
+    }
 
     // public PhysicsManager GetPhysics(){
     //     return m_PhysManager;
@@ -73,17 +75,17 @@ public class MainLogic : MonoBehaviour
     {
         m_Logic = this; 
 
-        // m_LevelLogic = new LevelLogic();
+        m_LevelLogic = new LevelLogic();
         // m_PhysManager = new PhysicsManager();
 
         // m_InputManager.Init();
         // m_Level.Init();
-        // m_EntityManager.Init();
-        // m_GUILogic.Init();
+        m_EntityManager.Init();
+        m_GUILogic.Init();
 
-        // m_LevelLogic.AddGameStartListener(GameStarted);
-        // m_LevelLogic.AddLevelStartListener(LevelStarted);
-        // m_LevelLogic.AddLevelEndListener(LevelEnded);
+        m_LevelLogic.AddGameStartListener(GameStarted);
+        m_LevelLogic.AddLevelStartListener(LevelStarted);
+        m_LevelLogic.AddLevelEndListener(LevelEnded);
     }
 
 #region Level events 
@@ -95,22 +97,23 @@ public class MainLogic : MonoBehaviour
         SetGameState(GameStates.Play);
     }
 
-    void LevelEnded(){
+    void LevelEnded(int level){
         SetGameState(GameStates.Over);
     }
 #endregion
 
-    // public void StartGame(){
-    //     m_LevelLogic.StartGame(0);
-    // }
+    public void StartGame(){
+        // use real level saved to player data 
+        m_LevelLogic.StartGame(0);
+    }
 
-    // public void RestartLevel(){
-    //     m_LevelLogic.RestartCurrLevel();
-    // }
+    public void RestartLevel(){
+        m_LevelLogic.RestartCurrLevel();
+    }
 
-    // public void MoveNext(){
-    //     m_LevelLogic.MoveNext(); 
-    // }
+    public void MoveNext(){
+        m_LevelLogic.MoveNext(); 
+    }
 
     float deltaTime = 0;
 
