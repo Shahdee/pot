@@ -15,6 +15,8 @@ public class Level : MonoBehaviour, IInitable
     public Transform[] SpawnPoints;
     List<GameObject> AllLevelPots = new List<GameObject>();
 
+    static string potTag = "Crate";
+
     public void Init(){
 
 
@@ -55,9 +57,12 @@ public class Level : MonoBehaviour, IInitable
         for (int i=0; i<SpawnPoints.Length; i++){
             random = Random.Range(0f, 1f);
             if (random > 0.5f){
-                gameObject = entittyMan.GetEntity();
+                gameObject = entittyMan.GetEntity(potTag);
                 if (gameObject != null){
-                    gameObject.transform.SetParent(SpawnPoints[i], false);
+                   
+                    gameObject.SetActive(true);
+                    gameObject.transform.position = SpawnPoints[i].position;
+
                     AllLevelPots.Add(gameObject);
                 }
             }

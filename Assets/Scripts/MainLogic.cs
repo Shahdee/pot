@@ -80,7 +80,6 @@ public class MainLogic : MonoBehaviour
 
         // m_InputManager.Init();
         // m_Level.Init();
-        m_EntityManager.Init();
         m_GUILogic.Init();
 
         m_LevelLogic.AddGameStartListener(GameStarted);

@@ -3,52 +3,64 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // TODO 
-// pool is working with gameobjects - improve it 
 // pots have different types - support it 
 
-public class EntityManager : MonoBehaviour, IInitable
+[System.Serializable]
+public class PoolledEntity{
+    public GameObject prototype;
+    public int amountToPool;
+    public bool expandable = false;
+
+}
+
+public class EntityManager : MonoBehaviour
 {
-    // instantiate objects  
+    // pool for diff objects
 
-    public GameObject m_Pot;
-    public Transform m_TrsPoolParent;
-    List<GameObject> m_ObjectsInPool = new List<GameObject>();
+    public List<PoolledEntity> entitiesToPool;
+    
+    Transform trsPoolParent;
+    List<GameObject> objectsInPool;
+    
+    void Start(){
+        trsPoolParent = transform;
+        objectsInPool = new List<GameObject>();
 
-    public void Init(){
-
+        foreach(var entity in entitiesToPool){
+            for (int i=0; i<entity.amountToPool; i++){
+                AddEntityToPool(entity.prototype);            
+            }
+        }
     }
 
-    // pool
+    GameObject AddEntityToPool(GameObject prototype){
+        
+        if (prototype == null) return null;
 
-    public GameObject GetEntity(){
+        var gobj = GameObject.Instantiate(prototype, Vector3.zero, Quaternion.identity);
+        gobj.transform.SetParent(trsPoolParent);
+        gobj.SetActive(false);
+        objectsInPool.Add(gobj);
 
-        GameObject gameObject = GetFromPool();
-
-        if (gameObject != null){
-            gameObject.SetActive(true);
-            return gameObject;
-        }
-        else{            
-            gameObject = GameObject.Instantiate(m_Pot, Vector3.zero, Quaternion.identity);
-        }
-        return gameObject;
+        return gobj;
     }
 
-    public void ReturnToPool(GameObject gobj){
+    public GameObject GetEntity(string tag){
 
-        // Debug.LogError("ReturnToPool " + obj);
-
-        m_ObjectsInPool.Add(gobj);
-        gobj.transform.SetParent(m_TrsPoolParent);
-        gobj.gameObject.SetActive(false);
-    }
-
-    GameObject GetFromPool(){
-        if (m_ObjectsInPool.Count > 0){
-            GameObject gobj = m_ObjectsInPool[m_ObjectsInPool.Count-1];
-            m_ObjectsInPool.RemoveAt(m_ObjectsInPool.Count-1);
-            return gobj;
+        for (int i=0; i<objectsInPool.Count; i++){
+            if (!objectsInPool[i].activeInHierarchy && objectsInPool[i].tag == tag){
+                return objectsInPool[i]; // this can be accessed by several classes, cause it's not activated here
+            }                
         }
+
+        foreach(var entity in entitiesToPool){
+            if (entity.expandable){
+                if (entity.prototype.tag == tag){
+                    return AddEntityToPool(entity.prototype);
+                }
+            }
+        }
+
         return null;
-    }
+    }   
 }

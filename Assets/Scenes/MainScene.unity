@@ -727,8 +727,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: def637c26eaa74426a069010b644644a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Pot: {fileID: 1000011275823026, guid: 8aab8386d1a2c4781a73efffba090436, type: 3}
-  m_TrsPoolParent: {fileID: 63266311}
+  entitiesToPool:
+  - prototype: {fileID: 1000011275823026, guid: 8aab8386d1a2c4781a73efffba090436,
+      type: 3}
+    amountToPool: 5
+    expandable: 1
+  - prototype: {fileID: 1168907351885854, guid: d64cd7e87d5d2407fa9b760c85522e22,
+      type: 3}
+    amountToPool: 5
+    expandable: 1
 --- !u!114 &576407661
 MonoBehaviour:
   m_ObjectHideFlags: 0

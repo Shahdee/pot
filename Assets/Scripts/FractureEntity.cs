@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class FractureEntity : MonoBehaviour
 {
-    public GameObject m_Fractured;
+    static string fracturedPotTag = "Crate Fractured";
 
     void OnMouseDown(){
-
-        Instantiate(m_Fractured, transform.position, transform.rotation);
+        var entityMan = MainLogic.GetMainLogic().GetEntityManager();
+        
+        var gobj = entityMan.GetEntity(fracturedPotTag);
+        gobj.SetActive(true);
+        gobj.transform.position = transform.position;
+        gobj.transform.rotation = transform.rotation;
         gameObject.SetActive(false);
     }
 }
