@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class FractureEntity : MonoBehaviour
 {
-    static string fracturedPotTag = "Crate Fractured";
+    static string fracturedPotTag = "Crate Fractured"; // TODO how do I retrieve prefab name and isolate it?
 
     void OnMouseDown(){
+        SubstituteWithFractured();
+    }
+
+    void SubstituteWithFractured(){
         var entityMan = MainLogic.GetMainLogic().GetEntityManager();
         
         var gobj = entityMan.GetEntity(fracturedPotTag);

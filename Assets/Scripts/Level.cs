@@ -14,11 +14,7 @@ public class Level : MonoBehaviour, IInitable
     [Header("Pot can be randomly placed here")]
     public Transform[] SpawnPoints;
     List<GameObject> AllLevelPots = new List<GameObject>();
-
-    static string potTag = "Crate";
-
     public void Init(){
-
 
     }
 
@@ -41,31 +37,44 @@ public class Level : MonoBehaviour, IInitable
 
     // put pots in place in level 
     public void Generate(int level){
-        // var data = m_MainLogic.GetDataLoader().GetData();
-
-        GeneratePots();
-
+        GeneratePots(level);
         OnLevelGenerate();
     }
 
-    void GeneratePots(){
+    void GeneratePots(int level){
+
         var entittyMan = MainLogic.GetMainLogic().GetEntityManager();
+        var data = MainLogic.GetMainLogic().GetGameData();
+
+        var currRoom = data.rooms[level];
 
         float random;
         GameObject gameObject;
 
         for (int i=0; i<SpawnPoints.Length; i++){
             random = Random.Range(0f, 1f);
-            if (random > 0.5f){
-                gameObject = entittyMan.GetEntity(potTag);
-                if (gameObject != null){
-                   
-                    gameObject.SetActive(true);
-                    gameObject.transform.position = SpawnPoints[i].position;
+            for (int j=0; j<currRoom.pots.Length; j++){
 
-                    AllLevelPots.Add(gameObject);
+                // place pot
+                if (random <= currRoom.pots[j].probability){
+
+                    // TODO I need to isolate code that searches for an appropriate pot 
+                    for (int k=0; k<data.pots.Length; k++){
+                        if (data.pots[k].potID == currRoom.pots[j].potID){
+                            gameObject = entittyMan.GetEntity(data.pots[k].prefab);
+                            if (gameObject != null){
+                            
+                                gameObject.SetActive(true);
+                                gameObject.transform.position = SpawnPoints[i].position;
+
+                                AllLevelPots.Add(gameObject);
+                            }
+                            break;
+                        }
+                    }
+                    break;
                 }
-            }
+            }           
         }
     }
 }

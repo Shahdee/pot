@@ -1,0 +1,14 @@
+{
+	"roomSequence": [0, 1, 2],
+
+	"pots":[
+		{"potID": 0, "prefab": "Crate", "fracturedPrefab": "CrateFractured", "points": 5}
+	],
+
+	"rooms": [{
+		"roomID": 0, "pots":[
+            	{"potID": 0, "probability": 1}
+			]
+		}
+	]
+}

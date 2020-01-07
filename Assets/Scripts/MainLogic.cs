@@ -14,6 +14,8 @@ public class MainLogic : MonoBehaviour
 
     // PhysicsManager m_PhysManager;
 
+    DataController dataController;
+
     public enum GameStates{
         Menu,
         Play,
@@ -61,6 +63,10 @@ public class MainLogic : MonoBehaviour
         return m_Level;
     }
 
+    public GameData GetGameData(){
+        return dataController.GetGameData();
+    }
+
     // public PhysicsManager GetPhysics(){
     //     return m_PhysManager;
     // }
@@ -74,6 +80,8 @@ public class MainLogic : MonoBehaviour
     void Start()
     {
         m_Logic = this; 
+
+        dataController = new DataController();
 
         m_LevelLogic = new LevelLogic();
         // m_PhysManager = new PhysicsManager();
